@@ -1,0 +1,219 @@
+# Chart Name
+
+Endpoint: buyerActions
+
+Endpoint Inputs (GraphQL Schema):
+
+  "A list of data for the Buyer Actions table."
+  buyerActions(
+    "The start of time to calculate demand for."
+    from: Instant,
+    "The end of time to calculate demand for."
+    until: Instant,
+    "For a row to appear, the total lead time must be greater than or equal to this duration, this number is in days"
+    maybeMinDuration: Int,
+    "The sites to filter resources by."
+    sites: [UUID!]!,
+    "The method for calculating lead time."
+    leadTimeType: leadTimeType!,
+    "The default type of schedule this chart uses"
+    defaultScheduler: scheduleType!
+  ): [PurchaseOrderAlertObject!]!
+
+Endpoint Inputs (JSON Schema):
+
+{
+            "name": "buyerActions",
+            "description": "A list of data for the Buyer Actions table.",
+            "args": [
+              {
+                "name": "defaultScheduler",
+                "description": "The default type of schedule this chart uses",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "scheduleType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "from",
+                "description": "The start of time to calculate demand for.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Instant",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "leadTimeType",
+                "description": "The method for calculating lead time.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "leadTimeType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "maybeMinDuration",
+                "description": "For a row to appear, the total lead time must be greater than or equal to this duration, this number is in days",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The sites to filter resources by.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "until",
+                "description": "The end of time to calculate demand for.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Instant",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PurchaseOrderAlertObject",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+/** Endpoints with data for specific chart types, improving performance. */
+export type ChartsBuyerActionsArgs = {
+  defaultScheduler: ScheduleType;
+  from?: InputMaybe<Scalars['Instant']['input']>;
+  leadTimeType: LeadTimeType;
+  maybeMinDuration?: InputMaybe<Scalars['Int']['input']>;
+  sites: Array<Scalars['UUID']['input']>;
+  until?: InputMaybe<Scalars['Instant']['input']>;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type BuyerActionsQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  from?: InputMaybe<Scalars['Instant']['input']>;
+  until?: InputMaybe<Scalars['Instant']['input']>;
+  leadTimeType: LeadTimeType;
+  defaultScheduler: ScheduleType;
+}>;
+
+export type BuyerActionsQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', buyerActions: Array<{ __typename?: 'PurchaseOrderAlertObject', purchasedPart: string, purchasedPartIdentifier: string, supplier?: string | null, purchasedLeadTime?: number | null, earliestTargetArrival?: DateTime | null, earliestPlacement?: DateTime | null, totalDemanded: number, quantityToPurchase: number, estimatedPrice: number, associatedLineItems: Array<{ __typename?: 'LineItemRowObject', salesOrder: string, lineItem: string, due: DateTime, finishedPart: string, customer?: string | null, targetArrival?: DateTime | null, placement?: DateTime | null, quantity: number }> }> } } };
+
+Return type (Typescript Document):
+
+  /** A list of data for the Buyer Actions table. */
+  buyerActions: Array<PurchaseOrderAlertObject>;
+
+/** The data necessary to make one row of the Purchase Order Placement Alerts table */
+export type PurchaseOrderAlertObject = {
+  __typename?: 'PurchaseOrderAlertObject';
+  /** The line items in need of the purchased parts. */
+  associatedLineItems: Array<LineItemRowObject>;
+  /** The earliest placement date of all the associated line items. */
+  earliestPlacement?: Maybe<Scalars['Instant']['output']>;
+  /** The earliest target arrival date of all the associated line items. */
+  earliestTargetArrival?: Maybe<Scalars['Instant']['output']>;
+  /** The estimated price of an order for the quantityToPurchase of the purchased part. */
+  estimatedPrice: Scalars['Float']['output'];
+  /** The lead time of the supplier. */
+  purchasedLeadTime?: Maybe<Scalars['Float']['output']>;
+  /** The name of the purchased part. */
+  purchasedPart: Scalars['String']['output'];
+  /** The identifier of the purchased part. */
+  purchasedPartIdentifier: Scalars['UUID']['output'];
+  /** The quantity needed of the purchased part to fulfill associated demand. */
+  quantityToPurchase: Scalars['Float']['output'];
+  /** The top supplier of the purchased part, if one exists. */
+  supplier?: Maybe<Scalars['String']['output']>;
+  /** The total quantity demanded of the purchased part. */
+  totalDemanded: Scalars['Float']['output'];
+};
+
+/** The data necessary to make one row of the of the inner table for the Purchase Order Placement Alerts table */
+export type LineItemRowObject = {
+  __typename?: 'LineItemRowObject';
+  /** The name of the customer, if there is one. */
+  customer?: Maybe<Scalars['String']['output']>;
+  /** The due date of the line item */
+  due: Scalars['Instant']['output'];
+  /** The name of the finished part. */
+  finishedPart: Scalars['String']['output'];
+  /** The name of the line item. */
+  lineItem: Scalars['String']['output'];
+  /** The manufacturing time of the finished part. */
+  manufacturedLeadTime?: Maybe<Scalars['Float']['output']>;
+  /** The recommended order placement date. */
+  placement?: Maybe<Scalars['Instant']['output']>;
+  /** The demand for the purchased part. */
+  quantity: Scalars['Float']['output'];
+  /** The name of the sales order. */
+  salesOrder: Scalars['String']['output'];
+  /** The date this line item needs the purchased part. */
+  targetArrival?: Maybe<Scalars['Instant']['output']>;
+};

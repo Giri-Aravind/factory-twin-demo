@@ -1,0 +1,159 @@
+# Chart Name
+
+Endpoint: materialShortageAnalysis
+
+Endpoint Inputs (GraphQL Schema):
+
+  "The data for creating the material shortage analysis chart."
+  materialShortageAnalysis(
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "The Boundaries of each period to calculate shortage for."
+    periodBoundaries: [Instant!]!,
+    "The identifier of the part to show shortage analysis for."
+    selectedMaterial: UUID!,
+    "The on time delivery buffer specified in the client configuration."
+    onTimeDeliveryBuffer: Float!
+  ): materialShortageAnalysisObject!
+
+Endpoint Inputs (JSON Schema):
+
+{
+            "name": "materialShortageAnalysis",
+            "description": "The data for creating the material shortage analysis chart.",
+            "args": [
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The on time delivery buffer specified in the client configuration.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "periodBoundaries",
+                "description": "The Boundaries of each period to calculate shortage for.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Instant",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "selectedMaterial",
+                "description": "The identifier of the part to show shortage analysis for.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UUID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "materialShortageAnalysisObject",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+/** Endpoints with data for specific chart types, improving performance. */
+export type ChartsMaterialShortageAnalysisArgs = {
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  periodBoundaries: Array<Scalars['Instant']['input']>;
+  selectedMaterial: Scalars['UUID']['input'];
+  sites: Array<Scalars['UUID']['input']>;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type MaterialShortageQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  periodBoundaries: Array<Scalars['Instant']['input']> | Scalars['Instant']['input'];
+  selectedMaterial: Scalars['UUID']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+}>;
+
+export type MaterialShortageQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', materialShortageAnalysis: { __typename?: 'materialShortageAnalysisObject', overduePurchaseOrderQuantity: number, quantityFromInventory: number, purchaseOrderQuantity: Array<number>, demandQuantity: Array<number>, inventoryValue: Array<number> } } } };
+
+Return type (Typescript Document):
+
+  /** The data for creating the material shortage analysis chart. */
+  materialShortageAnalysis: MaterialShortageAnalysisObject;
+
+/** The data necessary to create one segment of the Material Shortage Analysis Chart */
+export type MaterialShortageAnalysisObject = {
+  __typename?: 'materialShortageAnalysisObject';
+  /** The demand quantity arriving this month */
+  demandQuantity: Array<Scalars['Float']['output']>;
+  /** The Inventory value of this month */
+  inventoryValue: Array<Scalars['Float']['output']>;
+  /** The overdue purchase order quantity */
+  overduePurchaseOrderQuantity: Scalars['Float']['output'];
+  /** The purchase order quantity arriving this month */
+  purchaseOrderQuantity: Array<Scalars['Float']['output']>;
+  /** The quantity of the part in inventory as of now */
+  quantityFromInventory: Scalars['Float']['output'];
+};

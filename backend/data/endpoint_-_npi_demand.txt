@@ -1,0 +1,267 @@
+# NPI Demand
+
+Endpoint: NewPartIntroductionDemandTable
+
+Endpoint Inputs (GraphQL Schema):
+
+  "The data for creating the New Part Introduction Demand Table."
+  NewPartIntroductionDemandTable(
+    "If a part has not been made since this date, it is considered to be a NPI part."
+    determiningDate: Instant!,
+    "The filters to filter by"
+    filters: LineItemFilter!,
+    "The customer defined on time delivery buffer"
+    onTimeDeliveryBuffer: Float!,
+    "Only consider demand which is due on or after this date."
+    from: Instant,
+    "Only consider demand which is due before this date."
+    until: Instant,
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "Whether to use Due or Projected Completion for due date of Line items"
+    useProjectedCompletion: Boolean!,
+    "The name of the part group category which all slices should belong to."
+    partGroupCategoryName: String!
+  ): [NewPartIntroductionRowObject!]!
+
+Endpoint Inputs (JSON Schema):
+
+          {
+            "name": "NewPartIntroductionDemandTable",
+            "description": "The data for creating the New Part Introduction Demand Table.",
+            "args": [
+              {
+                "name": "determiningDate",
+                "description": "If a part has not been made since this date, it is considered to be a NPI part.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Instant",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "filters",
+                "description": "The filters to filter by",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "LineItemFilter",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "from",
+                "description": "Only consider demand which is due on or after this date.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Instant",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The customer defined on time delivery buffer",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "partGroupCategoryName",
+                "description": "The name of the part group category which all slices should belong to.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "until",
+                "description": "Only consider demand which is due before this date.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Instant",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "useProjectedCompletion",
+                "description": "Whether to use Due or Projected Completion for due date of Line items",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "NewPartIntroductionRowObject",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+export type ChartsNewPartIntroductionDemandTableArgs = {
+  determiningDate: Scalars['Instant']['input'];
+  filters: LineItemFilter;
+  from?: InputMaybe<Scalars['Instant']['input']>;
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  partGroupCategoryName: Scalars['String']['input'];
+  sites: Array<Scalars['UUID']['input']>;
+  until?: InputMaybe<Scalars['Instant']['input']>;
+  useProjectedCompletion: Scalars['Boolean']['input'];
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type GetNpiTableQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  determiningDate: Scalars['Instant']['input'];
+  filters: LineItemFilter;
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  from: Scalars['Instant']['input'];
+  until: Scalars['Instant']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  useProjectedCompletion: Scalars['Boolean']['input'];
+  partGroupCategoryName: Scalars['String']['input'];
+}>;
+
+
+export type GetNpiTableQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', NewPartIntroductionDemandTable: Array<{ __typename?: 'NewPartIntroductionRowObject', part: string, description: string, faiDate?: DateTime | null, lastProductionDate?: DateTime | null, inventoryQuantity: number, partGroupList: Array<string>, orders: Array<{ __typename?: 'NewPartIntroductionLineItemRowObject', lineItem: string, customer?: string | null, due: DateTime, quantity: number, value: number }> }> } } };
+
+Return type (Typescript Document):
+
+/** The data for creating the New Part Introduction Demand Table. */
+NewPartIntroductionDemandTable: Array<NewPartIntroductionRowObject>;
+
+/** The data necessary to create a row of the New Part Introduction Demand Table. */
+export type NewPartIntroductionRowObject = {
+  __typename?: 'NewPartIntroductionRowObject';
+  /** The description of the part. */
+  description: Scalars['String']['output'];
+  /** The FAI date of the NPI part. */
+  faiDate?: Maybe<Scalars['Instant']['output']>;
+  /** The total quantity of the part in inventory. */
+  inventoryQuantity: Scalars['Float']['output'];
+  /** The last record of making this part. */
+  lastProductionDate?: Maybe<Scalars['Instant']['output']>;
+  /** The sub-rows for this part, made up by the line items for this part. */
+  orders: Array<NewPartIntroductionLineItemRowObject>;
+  /** The name of the part. */
+  part: Scalars['String']['output'];
+  /** The list of part groups this part belongs to. */
+  partGroupList: Array<Scalars['String']['output']>;
+};
+
+/** The data needed to populate one sub-row of the NPI Demand table */
+export type NewPartIntroductionLineItemRowObject = {
+  __typename?: 'NewPartIntroductionLineItemRowObject';
+  /** The name of the customer. */
+  customer?: Maybe<Scalars['String']['output']>;
+  /** The due date of the line item. */
+  due: Scalars['Instant']['output'];
+  /** The name of the line item. */
+  lineItem: Scalars['String']['output'];
+  /** The total quantity of the line item. */
+  quantity: Scalars['Float']['output'];
+  /** The total value of the line item. */
+  value: Scalars['Float']['output'];
+};
+
+Endpoint Responses:
+
+Selected Sites: Both Sites Selected
+Filters: No Filters Selected
+Response:
+[ { "__typename": "NewPartIntroductionRowObject", "part": "SHMM-5783-KMLW", "description": "Titanium Rotor", "faiDate": "2024-11-08T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2023-09-14T13:37:45.494-05:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "SIRT48" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-23468-51-95", "customer": "VITA", "due": "2026-01-12T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 31105 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-30847-73-45", "customer": "VITA", "due": "2025-06-20T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18067.8 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-62539-14-00", "customer": "VITA", "due": "2026-01-26T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18703.45 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-51407-34-92", "customer": "VITA", "due": "2026-01-02T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18634.11 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-55254-96-73", "customer": "VITA", "due": "2025-08-19T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 30401.94 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-35923-06-79", "customer": "VITA", "due": "2024-12-15T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 17527.51 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52743-85-70", "customer": "VITA", "due": "2025-02-25T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 17735.54 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-58356-09-86", "customer": "VITA", "due": "2026-02-17T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18767.01 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-61371-55-10", "customer": "VITA", "due": "2025-09-14T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18316.28 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-15192-81-14", "customer": "VITA", "due": "2025-09-08T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 30498.24 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-18095-71-84", "customer": "VITA", "due": "2026-03-10T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 31379.49 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "MNWK-6246-AQAM", "description": "Titanium Vane", "faiDate": "2025-09-27T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-01-23T08:30:25.903-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "GECT" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-31153-34-84", "customer": "Nova Engineering", "due": "2026-02-14T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 89808.31 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-72249-44-17", "customer": "Nova Engineering", "due": "2025-10-22T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 52930.51 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-71755-76-65", "customer": "Nova Engineering", "due": "2026-03-16T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 54133.98 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-88641-84-81", "customer": "Nova Engineering", "due": "2026-02-24T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 89946.63 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69057-91-48", "customer": "Nova Engineering", "due": "2025-10-25T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 52955.41 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-44299-53-31", "customer": "Nova Engineering", "due": "2026-06-10T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 91412.93 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "PEZR-6458-RQHH", "description": "Steel Nozzle", "faiDate": "2024-12-26T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2024-02-03T02:23:15.096-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "LMF135" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-50059-59-40", "customer": "Orbital Metal Fabrication", "due": "2025-12-18T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 2082.85 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-55397-21-50", "customer": "Orbital Metal Fabrication", "due": "2025-06-20T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 18218.37 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-16003-12-10", "customer": "Orbital Metal Fabrication", "due": "2025-03-15T07:00:00.000-05:00[America/Chicago]", "quantity": 26, "value": 35207.26 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-09640-47-90", "customer": "Orbital Metal Fabrication", "due": "2025-08-11T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 7484.01 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-43243-31-77", "customer": "Orbital Metal Fabrication", "due": "2026-05-02T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 33316.04 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-78692-02-20", "customer": "Orbital Metal Fabrication", "due": "2026-03-14T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 18996.24 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86069-79-59", "customer": "Orbital Metal Fabrication", "due": "2025-04-13T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 31368.6 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-15068-68-12", "customer": "Orbital Metal Fabrication", "due": "2025-01-21T06:00:00.000-06:00[America/Chicago]", "quantity": 29, "value": 38855.57 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-32578-04-58", "customer": "Orbital Metal Fabrication", "due": "2025-07-15T07:00:00.000-05:00[America/Chicago]", "quantity": 25, "value": 34550.05 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-81406-68-20", "customer": "Orbital Metal Fabrication", "due": "2026-04-03T07:00:00.000-05:00[America/Chicago]", "quantity": 27, "value": 38814.75 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-87866-51-56", "customer": "Orbital Metal Fabrication", "due": "2026-03-13T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 33062.46 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "VEYN-8312-NVVE", "description": "Steel Vane", "faiDate": "2025-04-28T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-03-09T14:31:03.698-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "MO550" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-23390-46-50", "customer": "Echo Metalworks", "due": "2025-06-11T07:00:00.000-05:00[America/Chicago]", "quantity": 16, "value": 30360.02 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-63169-68-01", "customer": "Echo Metalworks", "due": "2026-05-24T07:00:00.000-05:00[America/Chicago]", "quantity": 4, "value": 8740.13 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-54233-38-64", "customer": "Echo Metalworks", "due": "2025-07-26T07:00:00.000-05:00[America/Chicago]", "quantity": 12, "value": 23165.77 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-89696-87-77", "customer": "Echo Metalworks", "due": "2025-08-25T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 25138.37 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52922-10-91", "customer": "Echo Metalworks", "due": "2026-04-10T07:00:00.000-05:00[America/Chicago]", "quantity": 17, "value": 33762.5 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "PBLR-0649-IDVM", "description": "Titanium Engine Mount", "faiDate": "2025-04-04T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-02-27T00:15:20.486-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "RRT56" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-12532-77-03", "customer": "Apex Precision Works", "due": "2026-02-23T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18853.34 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-77850-45-42", "customer": "Apex Precision Works", "due": "2025-10-14T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18470.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-42506-73-50", "customer": "Apex Precision Works", "due": "2025-12-23T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18673.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-37882-40-39", "customer": "Apex Precision Works", "due": "2025-08-23T07:00:00.000-05:00[America/Chicago]", "quantity": 4, "value": 54959.27 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69430-52-55", "customer": "Apex Precision Works", "due": "2025-12-25T06:00:00.000-06:00[America/Chicago]", "quantity": 10, "value": 130755.44 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69864-56-99", "customer": "Apex Precision Works", "due": "2025-10-21T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 67799.79 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-31492-59-36", "customer": "Apex Precision Works", "due": "2026-04-30T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 107920.18 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-02756-23-31", "customer": "Apex Precision Works", "due": "2025-05-29T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 66258 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-97043-05-42", "customer": "Apex Precision Works", "due": "2025-08-09T07:00:00.000-05:00[America/Chicago]", "quantity": 3, "value": 42651.36 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-58829-87-17", "customer": "Apex Precision Works", "due": "2025-05-08T07:00:00.000-05:00[America/Chicago]", "quantity": 3, "value": 42022.09 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-06234-71-68", "customer": "Apex Precision Works", "due": "2025-08-09T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18279.16 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "OLIC-5678-YLOH", "description": "", "faiDate": null, "lastProductionDate": null, "inventoryQuantity": 0, "partGroupList": [], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-67996-97-66", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52010-72-55", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86266-79-05", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "HAII-3601-KECV", "description": "Titanium Rotor", "faiDate": "2024-12-21T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2024-02-04T11:15:24.313-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "BFA18" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-70172-14-48", "customer": "Ironclad Machining Co.", "due": "2026-03-02T06:00:00.000-06:00[America/Chicago]", "quantity": 5, "value": 67041.65 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-40813-23-19", "customer": "Ironclad Machining Co.", "due": "2025-06-13T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 17548.05 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-20288-08-75", "customer": "Ironclad Machining Co.", "due": "2025-07-13T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 64651.83 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-27999-82-00", "customer": "Ironclad Machining Co.", "due": "2026-04-06T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 104166.99 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-03638-88-02", "customer": "Ironclad Machining Co.", "due": "2026-01-19T06:00:00.000-06:00[America/Chicago]", "quantity": 3, "value": 42387.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-22726-31-89", "customer": "Ironclad Machining Co.", "due": "2025-10-01T07:00:00.000-05:00[America/Chicago]", "quantity": 10, "value": 124999.45 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-14032-83-57", "customer": "Ironclad Machining Co.", "due": "2025-01-30T06:00:00.000-06:00[America/Chicago]", "quantity": 9, "value": 108753.39 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86334-83-26", "customer": "Ironclad Machining Co.", "due": "2025-07-04T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 99773.2 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-41306-65-05", "customer": "Ironclad Machining Co.", "due": "2026-05-04T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18461.07 } ] } ]
+
+Selected Sites: Minneapolis
+Filters: No Filters Selected
+Response:
+[ { "__typename": "NewPartIntroductionRowObject", "part": "SHMM-5783-KMLW", "description": "Titanium Rotor", "faiDate": "2024-11-08T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2023-09-14T13:37:45.494-05:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "SIRT48" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-23468-51-95", "customer": "VITA", "due": "2026-01-12T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 31105 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-30847-73-45", "customer": "VITA", "due": "2025-06-20T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18067.8 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-62539-14-00", "customer": "VITA", "due": "2026-01-26T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18703.45 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-51407-34-92", "customer": "VITA", "due": "2026-01-02T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18634.11 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-55254-96-73", "customer": "VITA", "due": "2025-08-19T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 30401.94 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-35923-06-79", "customer": "VITA", "due": "2024-12-15T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 17527.51 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52743-85-70", "customer": "VITA", "due": "2025-02-25T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 17735.54 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-58356-09-86", "customer": "VITA", "due": "2026-02-17T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18767.01 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-61371-55-10", "customer": "VITA", "due": "2025-09-14T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18316.28 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-15192-81-14", "customer": "VITA", "due": "2025-09-08T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 30498.24 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-18095-71-84", "customer": "VITA", "due": "2026-03-10T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 31379.49 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "MNWK-6246-AQAM", "description": "Titanium Vane", "faiDate": "2025-09-27T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-01-23T08:30:25.903-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "GECT" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-31153-34-84", "customer": "Nova Engineering", "due": "2026-02-14T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 89808.31 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-72249-44-17", "customer": "Nova Engineering", "due": "2025-10-22T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 52930.51 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-71755-76-65", "customer": "Nova Engineering", "due": "2026-03-16T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 54133.98 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-88641-84-81", "customer": "Nova Engineering", "due": "2026-02-24T06:00:00.000-06:00[America/Chicago]", "quantity": 2, "value": 89946.63 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69057-91-48", "customer": "Nova Engineering", "due": "2025-10-25T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 52955.41 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-44299-53-31", "customer": "Nova Engineering", "due": "2026-06-10T07:00:00.000-05:00[America/Chicago]", "quantity": 2, "value": 91412.93 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "PBLR-0649-IDVM", "description": "Titanium Engine Mount", "faiDate": "2025-04-04T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-02-27T00:15:20.486-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "RRT56" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-12532-77-03", "customer": "Apex Precision Works", "due": "2026-02-23T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18853.34 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-77850-45-42", "customer": "Apex Precision Works", "due": "2025-10-14T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18470.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-42506-73-50", "customer": "Apex Precision Works", "due": "2025-12-23T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 18673.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-37882-40-39", "customer": "Apex Precision Works", "due": "2025-08-23T07:00:00.000-05:00[America/Chicago]", "quantity": 4, "value": 54959.27 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69430-52-55", "customer": "Apex Precision Works", "due": "2025-12-25T06:00:00.000-06:00[America/Chicago]", "quantity": 10, "value": 130755.44 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-69864-56-99", "customer": "Apex Precision Works", "due": "2025-10-21T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 67799.79 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-31492-59-36", "customer": "Apex Precision Works", "due": "2026-04-30T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 107920.18 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-02756-23-31", "customer": "Apex Precision Works", "due": "2025-05-29T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 66258 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-97043-05-42", "customer": "Apex Precision Works", "due": "2025-08-09T07:00:00.000-05:00[America/Chicago]", "quantity": 3, "value": 42651.36 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-58829-87-17", "customer": "Apex Precision Works", "due": "2025-05-08T07:00:00.000-05:00[America/Chicago]", "quantity": 3, "value": 42022.09 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-06234-71-68", "customer": "Apex Precision Works", "due": "2025-08-09T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18279.16 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "OLIC-5678-YLOH", "description": "", "faiDate": null, "lastProductionDate": null, "inventoryQuantity": 0, "partGroupList": [], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-67996-97-66", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52010-72-55", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86266-79-05", "customer": "Meggitt Engine Systems", "due": "2024-11-29T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 76248.08 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "HAII-3601-KECV", "description": "Titanium Rotor", "faiDate": "2024-12-21T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2024-02-04T11:15:24.313-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "BFA18" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-70172-14-48", "customer": "Ironclad Machining Co.", "due": "2026-03-02T06:00:00.000-06:00[America/Chicago]", "quantity": 5, "value": 67041.65 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-40813-23-19", "customer": "Ironclad Machining Co.", "due": "2025-06-13T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 17548.05 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-20288-08-75", "customer": "Ironclad Machining Co.", "due": "2025-07-13T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 64651.83 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-27999-82-00", "customer": "Ironclad Machining Co.", "due": "2026-04-06T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 104166.99 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-03638-88-02", "customer": "Ironclad Machining Co.", "due": "2026-01-19T06:00:00.000-06:00[America/Chicago]", "quantity": 3, "value": 42387.55 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-22726-31-89", "customer": "Ironclad Machining Co.", "due": "2025-10-01T07:00:00.000-05:00[America/Chicago]", "quantity": 10, "value": 124999.45 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-14032-83-57", "customer": "Ironclad Machining Co.", "due": "2025-01-30T06:00:00.000-06:00[America/Chicago]", "quantity": 9, "value": 108753.39 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86334-83-26", "customer": "Ironclad Machining Co.", "due": "2025-07-04T07:00:00.000-05:00[America/Chicago]", "quantity": 8, "value": 99773.2 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-41306-65-05", "customer": "Ironclad Machining Co.", "due": "2026-05-04T07:00:00.000-05:00[America/Chicago]", "quantity": 1, "value": 18461.07 } ] } ]
+
+Selected Sites: St. Cloud
+Filters: No Filters Selected
+Response:
+[ { "__typename": "NewPartIntroductionRowObject", "part": "PEZR-6458-RQHH", "description": "Steel Nozzle", "faiDate": "2024-12-26T06:00:00.000-06:00[America/Chicago]", "lastProductionDate": "2024-02-03T02:23:15.096-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "LMF135" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-50059-59-40", "customer": "Orbital Metal Fabrication", "due": "2025-12-18T06:00:00.000-06:00[America/Chicago]", "quantity": 1, "value": 2082.85 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-55397-21-50", "customer": "Orbital Metal Fabrication", "due": "2025-06-20T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 18218.37 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-16003-12-10", "customer": "Orbital Metal Fabrication", "due": "2025-03-15T07:00:00.000-05:00[America/Chicago]", "quantity": 26, "value": 35207.26 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-09640-47-90", "customer": "Orbital Metal Fabrication", "due": "2025-08-11T07:00:00.000-05:00[America/Chicago]", "quantity": 5, "value": 7484.01 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-43243-31-77", "customer": "Orbital Metal Fabrication", "due": "2026-05-02T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 33316.04 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-78692-02-20", "customer": "Orbital Metal Fabrication", "due": "2026-03-14T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 18996.24 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-86069-79-59", "customer": "Orbital Metal Fabrication", "due": "2025-04-13T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 31368.6 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-15068-68-12", "customer": "Orbital Metal Fabrication", "due": "2025-01-21T06:00:00.000-06:00[America/Chicago]", "quantity": 29, "value": 38855.57 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-32578-04-58", "customer": "Orbital Metal Fabrication", "due": "2025-07-15T07:00:00.000-05:00[America/Chicago]", "quantity": 25, "value": 34550.05 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-81406-68-20", "customer": "Orbital Metal Fabrication", "due": "2026-04-03T07:00:00.000-05:00[America/Chicago]", "quantity": 27, "value": 38814.75 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-87866-51-56", "customer": "Orbital Metal Fabrication", "due": "2026-03-13T07:00:00.000-05:00[America/Chicago]", "quantity": 23, "value": 33062.46 } ] }, { "__typename": "NewPartIntroductionRowObject", "part": "VEYN-8312-NVVE", "description": "Steel Vane", "faiDate": "2025-04-28T07:00:00.000-05:00[America/Chicago]", "lastProductionDate": "2024-03-09T14:31:03.698-06:00[America/Chicago]", "inventoryQuantity": 0, "partGroupList": [ "MO550" ], "orders": [ { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-23390-46-50", "customer": "Echo Metalworks", "due": "2025-06-11T07:00:00.000-05:00[America/Chicago]", "quantity": 16, "value": 30360.02 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-63169-68-01", "customer": "Echo Metalworks", "due": "2026-05-24T07:00:00.000-05:00[America/Chicago]", "quantity": 4, "value": 8740.13 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-54233-38-64", "customer": "Echo Metalworks", "due": "2025-07-26T07:00:00.000-05:00[America/Chicago]", "quantity": 12, "value": 23165.77 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-89696-87-77", "customer": "Echo Metalworks", "due": "2025-08-25T07:00:00.000-05:00[America/Chicago]", "quantity": 13, "value": 25138.37 }, { "__typename": "NewPartIntroductionLineItemRowObject", "lineItem": "LI-52922-10-91", "customer": "Echo Metalworks", "due": "2026-04-10T07:00:00.000-05:00[America/Chicago]", "quantity": 17, "value": 33762.5 } ] } ]

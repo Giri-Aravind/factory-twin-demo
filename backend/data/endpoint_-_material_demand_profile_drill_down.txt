@@ -1,0 +1,202 @@
+# Chart Name
+
+Endpoint: suppliedMaterialDemandByMaterial
+
+Endpoint Inputs (GraphQL Schema):
+
+  "A list of all the bars to create the Bought Part Demand By Part chart"
+  suppliedMaterialDemandByMaterial(
+    "Boundaries for each bar on the chart."
+    periodBoundaries: [Instant!]!,
+    "The part to view bought part demand by."
+    part: UUID,
+    "The method to stack the demand by."
+    stackType: SuppliedMaterialDemandStackType!,
+    "The part group category to stack by, if the stack type is Part Group Category."
+    partGroupCategory: UUID,
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "The customer defined on time delivery buffer."
+    onTimeDeliveryBuffer: Float!
+  ): [BoughtPartDemandBarObject!]!
+
+Endpoint Inputs (JSON Schema):
+
+{
+            "name": "suppliedMaterialDemandByMaterial",
+            "description": "A list of all the bars to create the Bought Part Demand By Part chart",
+            "args": [
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The customer defined on time delivery buffer.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "part",
+                "description": "The part to view bought part demand by.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "partGroupCategory",
+                "description": "The part group category to stack by, if the stack type is Part Group Category.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "periodBoundaries",
+                "description": "Boundaries for each bar on the chart.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Instant",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "stackType",
+                "description": "The method to stack the demand by.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "SuppliedMaterialDemandStackType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "BoughtPartDemandBarObject",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+/** Endpoints with data for specific chart types, improving performance. */
+export type ChartsSuppliedMaterialDemandByMaterialArgs = {
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  part?: InputMaybe<Scalars['UUID']['input']>;
+  partGroupCategory?: InputMaybe<Scalars['UUID']['input']>;
+  periodBoundaries: Array<Scalars['Instant']['input']>;
+  sites: Array<Scalars['UUID']['input']>;
+  stackType: SuppliedMaterialDemandStackType;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type SuppliedMaterialDemandByMaterialQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  part?: InputMaybe<Scalars['UUID']['input']>;
+  stackType: SuppliedMaterialDemandStackType;
+  partGroupCategory?: InputMaybe<Scalars['UUID']['input']>;
+  periodBoundaries: Array<Scalars['Instant']['input']> | Scalars['Instant']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+}>;
+
+export type SuppliedMaterialDemandByMaterialQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', suppliedMaterialDemandByMaterial: Array<{ __typename?: 'BoughtPartDemandBarObject', startDate: DateTime, stacks: Array<{ __typename?: 'BoughtPartDemandSegmentObject', name: string, quantity: number }> }> } } };
+
+Return type (Typescript Document):
+
+  /** A list of all the bars to create the Bought Part Demand By Part chart */
+  suppliedMaterialDemandByMaterial: Array<BoughtPartDemandBarObject>;
+
+/** An individual bar for the Bought Part Demand chart */
+export type BoughtPartDemandBarObject = {
+  __typename?: 'BoughtPartDemandBarObject';
+  /** The list of stacks that make up the bar. */
+  stacks: Array<BoughtPartDemandSegmentObject>;
+  /** The start date of the bar. */
+  startDate: Scalars['Instant']['output'];
+};
+
+/** An individual stack for the Bought Part Demand chart */
+export type BoughtPartDemandSegmentObject = {
+  __typename?: 'BoughtPartDemandSegmentObject';
+  /** The name of the stack. */
+  name: Scalars['String']['output'];
+  /** The quantity of the stack. */
+  quantity: Scalars['Float']['output'];
+};

@@ -1,0 +1,245 @@
+# Chart Name
+
+Endpoint: ospPartDemand
+
+Endpoint Inputs (GraphQL Schema):
+
+  "A list of all the bars to create the OSP Part Demand chart"
+  ospPartDemand(
+    "Boundaries for each bar on the chart."
+    periodBoundaries: [Instant!]!,
+    "The supplier to view bought part demand by."
+    partSupplier: UUID,
+    "The supplier to view bought part demand by."
+    part: UUID,
+    "The supplier to view bought part demand by."
+    process: UUID,
+    "The method to stack the demand by."
+    stackType: OspPartDemandStackType!,
+    "The part group category to stack by, if the stack type is Part Group Category."
+    partGroupCategory: UUID,
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "The customer defined on time delivery buffer."
+    onTimeDeliveryBuffer: Float!
+  ): [OspPartDemandBarObject!]!
+
+Endpoint Inputs (JSON Schema):
+
+{
+            "name": "ospPartDemand",
+            "description": "A list of all the bars to create the OSP Part Demand chart",
+            "args": [
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The customer defined on time delivery buffer.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "part",
+                "description": "The supplier to view bought part demand by.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "partGroupCategory",
+                "description": "The part group category to stack by, if the stack type is Part Group Category.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "partSupplier",
+                "description": "The supplier to view bought part demand by.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "periodBoundaries",
+                "description": "Boundaries for each bar on the chart.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Instant",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "process",
+                "description": "The supplier to view bought part demand by.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "stackType",
+                "description": "The method to stack the demand by.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "OspPartDemandStackType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OspPartDemandBarObject",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+/** Endpoints with data for specific chart types, improving performance. */
+export type ChartsOspPartDemandArgs = {
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  part?: InputMaybe<Scalars['UUID']['input']>;
+  partGroupCategory?: InputMaybe<Scalars['UUID']['input']>;
+  partSupplier?: InputMaybe<Scalars['UUID']['input']>;
+  periodBoundaries: Array<Scalars['Instant']['input']>;
+  process?: InputMaybe<Scalars['UUID']['input']>;
+  sites: Array<Scalars['UUID']['input']>;
+  stackType: OspPartDemandStackType;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type OspPartDemandQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  partSupplier?: InputMaybe<Scalars['UUID']['input']>;
+  part?: InputMaybe<Scalars['UUID']['input']>;
+  process?: InputMaybe<Scalars['UUID']['input']>;
+  stackType: OspPartDemandStackType;
+  partGroupCategory?: InputMaybe<Scalars['UUID']['input']>;
+  periodBoundaries: Array<Scalars['Instant']['input']> | Scalars['Instant']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+}>;
+
+export type OspPartDemandQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', ospPartDemand: Array<{ __typename?: 'OspPartDemandBarObject', startDate: DateTime, stacks: Array<{ __typename?: 'OspPartDemandSegmentObject', name: string, quantity: number }> }> } } };
+
+/** The available stack types for the OSP Part Demand chart. */
+export enum OspPartDemandStackType {
+  Customer = 'CUSTOMER',
+  FinishedGood = 'FINISHED_GOOD',
+  LineItem = 'LINE_ITEM',
+  OrderType = 'ORDER_TYPE',
+  OspPart = 'OSP_PART',
+  PartGroupCategory = 'PART_GROUP_CATEGORY',
+  Process = 'PROCESS'
+}
+
+Return type (Typescript Document):
+
+  /** A list of all the bars to create the OSP Part Demand chart */
+  ospPartDemand: Array<OspPartDemandBarObject>;
+
+/** An individual bar for the OSP Part Demand chart */
+export type OspPartDemandBarObject = {
+  __typename?: 'OspPartDemandBarObject';
+  /** The list of stacks that make up the bar. */
+  stacks: Array<OspPartDemandSegmentObject>;
+  /** The start date of the bar. */
+  startDate: Scalars['Instant']['output'];
+};
+
+/** An individual stack for the OSP Part Demand chart */
+export type OspPartDemandSegmentObject = {
+  __typename?: 'OspPartDemandSegmentObject';
+  /** The name of the stack. */
+  name: Scalars['String']['output'];
+  /** The quantity of the stack. */
+  quantity: Scalars['Float']['output'];
+};

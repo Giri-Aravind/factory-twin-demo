@@ -1,0 +1,184 @@
+# Monthly Aggregate Demand
+
+Endpoint: demandByFulfillmentHistogram
+
+Endpoint Inputs (GraphQL Schema):
+
+  "A list of data for creating the demand by fulfillment histogram chart."
+  demandByFulfillmentHistogram(
+    "The boundaries of each period to calculate demand for."
+    periodBoundaries: [Instant!]!,
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "The customer defined on time delivery buffer"
+    onTimeDeliveryBuffer: Float!,
+    "Whether to place the line items in the projected completion date or not"
+    useProjectedCompletion: Boolean
+  ): [ProjectedDemandDataObject!]!
+
+
+Endpoint Inputs (JSON Schema):
+
+          {
+            "name": "demandByFulfillmentHistogram",
+            "description": "A list of data for creating the demand by fulfillment histogram chart.",
+            "args": [
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The customer defined on time delivery buffer",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "periodBoundaries",
+                "description": "The boundaries of each period to calculate demand for.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Instant",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "useProjectedCompletion",
+                "description": "Whether to place the line items in the projected completion date or not",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ProjectedDemandDataObject",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+export type ChartsDemandByFulfillmentHistogramArgs = {
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  periodBoundaries: Array<Scalars['Instant']['input']>;
+  sites: Array<Scalars['UUID']['input']>;
+  useProjectedCompletion?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type HistogramDemandByFulfillmentQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  periodBoundaries: Array<Scalars['Instant']['input']> | Scalars['Instant']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  useProjectedCompletion?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type HistogramDemandByFulfillmentQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', demandByFulfillmentHistogram: Array<{ __typename?: 'ProjectedDemandDataObject', startDate: DateTime, stackDataList: Array<{ __typename?: 'StackDataObject', name: string, quantity: number, value: number }> }> } } };
+
+Return type (Typescript Document):
+
+/** A list of data for creating the demand by fulfillment histogram chart. */
+demandByFulfillmentHistogram: Array<ProjectedDemandDataObject>;
+
+/** The data for the projected demand charts. */
+export type ProjectedDemandDataObject = {
+  __typename?: 'ProjectedDemandDataObject';
+  /** The data for each stack in this period. */
+  stackDataList: Array<StackDataObject>;
+  /** The date this period starts. */
+  startDate: Scalars['Instant']['output'];
+};
+
+/** The name for the stack, with the quantity and value of this stack. */
+export type StackDataObject = {
+  __typename?: 'StackDataObject';
+  /** The name of the stack. */
+  name: Scalars['String']['output'];
+  /** The quantity of this stack. */
+  quantity: Scalars['Float']['output'];
+  /** The value of this stack. */
+  value: Scalars['Float']['output'];
+};
+	
+Endpoint Responses:
+
+Selected Site: Both site selected
+
+Response:
+[ { "__typename": "ProjectedDemandDataObject", "startDate": "2025-01-01T08:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 149, "value": 1079098.66 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 340, "value": 2557027.7800000007 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 375, "value": 2365375.6599999983 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 397, "value": 3274194.0199999996 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 400, "value": 2360384.0300000003 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 436, "value": 2707363.900000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 470, "value": 2686496.38 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 410, "value": 2603807.5000000014 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-08-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 411, "value": 2995492.6799999997 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-09-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 358, "value": 2540867.0499999993 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-10-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 440, "value": 2641301.270000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-11-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 360, "value": 2730803.1099999994 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 20, "value": 74901.17 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-12-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 83, "value": 517053.57 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 235, "value": 1674382.4300000002 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-01-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 135, "value": 1344738.2700000003 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 155, "value": 1053319.8399999999 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 354, "value": 2282548.9400000004 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 59, "value": 245785.34999999998 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 465, "value": 2854175.96 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 2, "value": 158799.38 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 465, "value": 2519351.310000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 362, "value": 2440523.6400000006 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 425, "value": 2476919.580000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 278, "value": 2126024.33 } ] } ]
+
+Selected Site: Minneapolis
+
+Response:
+[ { "__typename": "ProjectedDemandDataObject", "startDate": "2025-01-01T08:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 39, "value": 748409.7000000002 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 124, "value": 2067722.21 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 102, "value": 1826729.2999999998 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 132, "value": 2454864.7000000007 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 82, "value": 1704842.8 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 109, "value": 1961451.3200000003 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 126, "value": 1893049.9699999995 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 129, "value": 2046588.93 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-08-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 121, "value": 2139173.9299999997 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-09-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 108, "value": 1923812.4000000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-10-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 122, "value": 1916013.37 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-11-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 104, "value": 2110994.1 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 6, "value": 45693.11 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-12-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 21, "value": 336031.11 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 80, "value": 1308998.97 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-01-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 60, "value": 1058316.77 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 39, "value": 619923.1699999999 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 88, "value": 1671578.4900000005 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 1, "value": 53860.24 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 118, "value": 2189889.1799999997 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 2, "value": 158799.38 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 131, "value": 1890759.8599999999 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 112, "value": 1721282.52 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 100, "value": 1805040.5199999998 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 87, "value": 1607088.9500000002 } ] } ]
+
+Selected Site: St. Cloud
+Response:
+[ { "__typename": "ProjectedDemandDataObject", "startDate": "2025-01-01T08:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 110, "value": 330688.95999999996 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 216, "value": 489305.57000000007 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 273, "value": 538646.36 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 265, "value": 819329.32 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 318, "value": 655541.23 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 327, "value": 745912.58 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 344, "value": 793446.4100000001 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 281, "value": 557218.57 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-08-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 290, "value": 856318.7499999999 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-09-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 250, "value": 617054.65 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-10-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 318, "value": 725287.8999999998 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-11-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 256, "value": 619809.01 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 14, "value": 29208.06 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2025-12-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 155, "value": 365383.46 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 62, "value": 181022.46 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-01-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 75, "value": 286421.5 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 116, "value": 433396.67 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-02-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 266, "value": 610970.4499999998 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 58, "value": 191925.11 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-03-01T00:00:00.000-06:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 347, "value": 664286.78 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-04-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 334, "value": 628591.45 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-05-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 250, "value": 719241.12 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-06-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 325, "value": 671879.0600000002 } ] }, { "__typename": "ProjectedDemandDataObject", "startDate": "2026-07-01T00:00:00.000-05:00[America/Chicago]", "stackDataList": [ { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 191, "value": 518935.37999999995 } ] } ]

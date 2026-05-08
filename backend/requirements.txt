@@ -1,0 +1,12 @@
+langgraph
+groq
+qdrant-client
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+python-dotenv
+pydantic
+requests
+python-dateutil
+sentence-transformers

@@ -1,0 +1,186 @@
+# Total Aggregate Demand
+
+Endpoint: demandByFulfillmentDonut
+
+Endpoint Inputs (GraphQL Schema):
+
+  "The data for creating the demand by fulfillment donut chart."
+  demandByFulfillmentDonut(
+    "The date with which to begin calculating the demand."
+    from: Instant!,
+    "The date with which to stop calculating the demand."
+    until: Instant!,
+    "The identifiers of the sites to calculate the data for. Empty list will result in all sites."
+    sites: [UUID!]!,
+    "The customer defined on time delivery buffer"
+    onTimeDeliveryBuffer: Float!,
+    "Whether to place the line items in the projected completion date or not"
+    useProjectedCompletion: Boolean
+  ): ProjectedDemandDataObject!
+
+Endpoint Inputs (JSON Schema):
+
+	{
+            "name": "demandByFulfillmentDonut",
+            "description": "The data for creating the demand by fulfillment donut chart.",
+            "args": [
+              {
+                "name": "from",
+                "description": "The date with which to begin calculating the demand.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Instant",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "onTimeDeliveryBuffer",
+                "description": "The customer defined on time delivery buffer",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sites",
+                "description": "The identifiers of the sites to calculate the data for. Empty list will result in all sites.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "UUID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "until",
+                "description": "The date with which to stop calculating the demand.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Instant",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "useProjectedCompletion",
+                "description": "Whether to place the line items in the projected completion date or not",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ProjectedDemandDataObject",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+
+Endpoint Inputs (Typescript Document):
+
+export type ChartsDemandByFulfillmentDonutArgs = {
+  from: Scalars['Instant']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  sites: Array<Scalars['UUID']['input']>;
+  until: Scalars['Instant']['input'];
+  useProjectedCompletion?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+Endpoint Query & Query Variables (Typescript Document):
+
+export type DonutDemandByFulfillmentQueryVariables = Exact<{
+  simulation: Scalars['UUID']['input'];
+  sites: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  from: Scalars['Instant']['input'];
+  until: Scalars['Instant']['input'];
+  onTimeDeliveryBuffer: Scalars['Float']['input'];
+  useProjectedCompletion?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type DonutDemandByFulfillmentQuery = { __typename?: 'Query', simulation: { __typename?: 'Simulation', charts: { __typename?: 'Charts', demandByFulfillmentDonut: { __typename?: 'ProjectedDemandDataObject', startDate: DateTime, stackDataList: Array<{ __typename?: 'StackDataObject', name: string, quantity: number, value: number }> } } } };
+
+Return type (Typescript Document):
+
+/** The data for creating the demand by fulfillment donut chart. */
+demandByFulfillmentDonut: ProjectedDemandDataObject;
+
+/** The data for the projected demand charts. */
+export type ProjectedDemandDataObject = {
+  __typename?: 'ProjectedDemandDataObject';
+  /** The data for each stack in this period. */
+  stackDataList: Array<StackDataObject>;
+  /** The date this period starts. */
+  startDate: Scalars['Instant']['output'];
+};
+
+/** The name for the stack, with the quantity and value of this stack. */
+export type StackDataObject = {
+  __typename?: 'StackDataObject';
+  /** The name of the stack. */
+  name: Scalars['String']['output'];
+  /** The quantity of this stack. */
+  quantity: Scalars['Float']['output'];
+  /** The value of this stack. */
+  value: Scalars['Float']['output'];
+};
+
+
+Endpoint Responses:
+
+Selected Site: Both Sites Selected
+Response:
+[ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 149, "value": 1079098.66 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 2316, "value": 14611009.209999997 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 4848, "value": 32595400.379999988 } ]
+
+Selected Site: Minneapolis
+Response:
+[ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 39, "value": 748409.7000000002 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 643, "value": 10819388.329999993 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 1381, "value": 24186824.790000003 } ]
+
+Selected Site: St. Cloud
+Response:
+[ { "__typename": "StackDataObject", "name": "Overdue", "quantity": 110, "value": 330688.95999999996 }, { "__typename": "StackDataObject", "name": "Forecasted", "quantity": 1673, "value": 3791620.880000001 }, { "__typename": "StackDataObject", "name": "Firm Order", "quantity": 3467, "value": 8408575.590000002 } ]
